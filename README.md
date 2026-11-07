@@ -37,17 +37,21 @@ data/
 
 ## Entrega de 07/11 - Etapa 2
 
-O arquivo principal desta entrega é `Trabalho_IA_Etapa_2.ipynb`. Ele cobre somente o escopo de
-pré-processamento solicitado para 07/11:
+A divisão entre as cinco pessoas está em `docs/etapa2_divisao.md`. Todas as partes usam o mesmo
+protocolo: só `data/treino.csv`, `StratifiedGroupKFold` com 5 dobras sem embaralhar, Regressão
+Logística de referência e todo ajuste dentro da dobra de treino.
 
-- comparação de tratamentos de redundâncias e inconsistências;
-- `RandomUnderSampler` versus `RandomOverSampler`, além do controle sem balanceamento;
-- one-hot encoding com categorias desconhecidas ignoradas;
-- imputação, indicadores de ausência e padronização numérica;
-- redução de dimensionalidade com Truncated SVD;
-- validação cruzada sem embaralhamento, mantendo assinaturas idênticas na mesma dobra;
-- exportação das tabelas para `output/etapa_2/`.
+| Parte | Responsável | Código | Notebook |
+|---|---|---|---|
+| 1. Redundâncias e inconsistências | Daniel Alves | `src/cleaning.py` | `Trabalho_IA_Etapa_2.ipynb` |
+| 2. Ausentes e codificação categórica | Samuel | `src/encoding.py` | `notebooks/02_codificacao.ipynb` |
+| 3. Transformação numérica | Daniel Pedrosa | — | — |
+| 4. Balanceamento | Izadora | `src/preprocessing_stage2.py` | `Trabalho_IA_Etapa_2.ipynb` |
+| 5. Redução de dimensionalidade | Larissa | `src/preprocessing_stage2.py` | `Trabalho_IA_Etapa_2.ipynb` |
 
-Para gerar os resultados reais, adicione `base_nsl_kdd.csv` na raiz do projeto ou em `data/` e
-execute todas as células do notebook. O relatório da Etapa 1 não contém as linhas da base e, por
-isso, não substitui o CSV na execução dos experimentos.
+`src/preprocessing_stage2.py` contém a preparação determinística comum (`prepare_modeling_data`) e
+`src/experiments.py` as métricas compartilhadas. As tabelas e figuras de todas as partes são
+gravadas em `output/etapa_2/` (`resultados_<parte>.csv`).
+
+Para reproduzir, coloque os três CSVs do Canvas em `data/` (pasta ignorada pelo Git) e execute os
+notebooks do início ao fim.
