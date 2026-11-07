@@ -34,3 +34,20 @@ data/
 ├── teste_sem_rotulo.csv
 └── modelo_de_submissao.csv
 ```
+
+## Entrega de 07/11 - Etapa 2
+
+O arquivo principal desta entrega é `Trabalho_IA_Etapa_2.ipynb`. Ele cobre somente o escopo de
+pré-processamento solicitado para 07/11:
+
+- comparação de tratamentos de redundâncias e inconsistências;
+- `RandomUnderSampler` versus `RandomOverSampler`, além do controle sem balanceamento;
+- one-hot encoding com categorias desconhecidas ignoradas;
+- imputação, indicadores de ausência e padronização numérica;
+- redução de dimensionalidade com Truncated SVD;
+- validação cruzada sem embaralhamento, mantendo assinaturas idênticas na mesma dobra;
+- exportação das tabelas para `output/etapa_2/`.
+
+Para gerar os resultados reais, adicione `base_nsl_kdd.csv` na raiz do projeto ou em `data/` e
+execute todas as células do notebook. O relatório da Etapa 1 não contém as linhas da base e, por
+isso, não substitui o CSV na execução dos experimentos.
