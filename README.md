@@ -21,9 +21,9 @@ as partes individuais.
 |---|---|---|
 | 1. Redundantes/inconsistentes + estrutura comum | Izadora | no Colab do grupo |
 | 2. Codificação categórica | Samuel | ✅ [resumo](docs/parte2_codificacao.md) · [notebook](notebooks/parte2_codificacao.ipynb) · [abrir no Colab](https://colab.research.google.com/github/IzadoraGalarza/TP1_G5_IA/blob/main/notebooks/parte2_codificacao.ipynb) |
-| 3. Normalização | Larissa | — |
-| 4. Balanceamento | a definir | — |
-| 5. PCA ou seleção de instâncias + tabela final | a definir | — |
+| 3. Normalização | Izadora | [abrir colab] https://colab.research.google.com/drive/1ANn4rmYFsz3ziuuhk25IlDa1llmk6GqQ?usp=sharing |
+| 4. Balanceamento | Larissa | — |
+| 5. PCA ou seleção de instâncias + tabela final | a definir | Daniel |
 
 Regra de ouro: tudo o que aprende algo dos dados (imputação, codificação, escala, balanceamento, PCA)
 fica dentro do Pipeline e é ajustado só no treino de cada fold. O teste nunca participa de nenhum `fit`.
