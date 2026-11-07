@@ -136,7 +136,9 @@ def prepare_modeling_data(
 
     for column in KNOWN_CATEGORICAL:
         if column in X.columns:
-            X[column] = X[column].astype("string").str.strip().str.lower()
+            normalized = X[column].astype("string").str.strip().str.lower()
+            # object + np.nan: o SimpleImputer não aceita o pd.NA do dtype "string".
+            X[column] = normalized.astype(object).where(normalized.notna(), np.nan)
 
     invalid_values_replaced = 0
     for column in NONNEGATIVE_COLUMNS:

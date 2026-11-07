@@ -19,7 +19,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedGroupKFold, cross_validate
 from sklearn.pipeline import Pipeline as SklearnPipeline
-from sklearn.preprocessing import FunctionTransformer, OneHotEncoder, OrdinalEncoder, StandardScaler
+from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, StandardScaler
 
 from src.experiments import SCORING
 from src.preprocessing_stage2 import PreparationReport, make_duplicate_groups
@@ -71,19 +71,8 @@ ENCODING_VARIANTS = (
 )
 
 
-def _to_object_with_nan(X: pd.DataFrame) -> pd.DataFrame:
-    # prepare_modeling_data devolve dtype "string" com pd.NA, que o SimpleImputer não aceita.
-    return X.astype(object).where(X.notna(), np.nan)
-
-
 def _categorical_pipeline(imputacao: str, codificacao: str) -> SklearnPipeline:
-    return SklearnPipeline(
-        [
-            ("nan_padrao", FunctionTransformer(_to_object_with_nan, feature_names_out="one-to-one")),
-            ("imputacao", _imputer(imputacao)),
-        ]
-        + _encoder_steps(codificacao)
-    )
+    return SklearnPipeline([("imputacao", _imputer(imputacao))] + _encoder_steps(codificacao))
 
 
 def _imputer(imputacao: str) -> SimpleImputer:

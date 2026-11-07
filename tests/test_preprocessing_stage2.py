@@ -3,6 +3,7 @@ import unittest
 import pandas as pd
 
 from src.preprocessing_stage2 import (
+    build_preprocessor,
     evaluate_cleaning_strategies,
     evaluate_preprocessing_strategies,
     make_duplicate_groups,
@@ -40,6 +41,12 @@ class Stage2PreprocessingTests(unittest.TestCase):
         self.assertEqual(set(y.unique()), {"normal", "anomaly"})
         self.assertGreaterEqual(report.invalid_values_replaced_by_nan, 2)
         self.assertEqual(X["protocol_type"].iloc[1], "tcp")
+
+    def test_missing_categories_reach_the_imputer(self) -> None:
+        self.data.loc[[2, 4], "service"] = None
+        X, _, report = prepare_modeling_data(self.data)
+        self.assertEqual(int(X["service"].isna().sum()), 2)
+        build_preprocessor(report).fit(X)
 
     def test_equal_predictors_receive_equal_group(self) -> None:
         X, _, _ = prepare_modeling_data(self.data)
