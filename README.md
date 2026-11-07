@@ -19,7 +19,7 @@ as partes individuais.
 
 | Parte | Responsável | Situação |
 |---|---|---|
-| 1. Redundantes/inconsistentes + estrutura comum | Izadora | ✅ [resumo](docs/parte1_redundante.md) · [notebook](-) · [abrir no Colab](https://colab.research.google.com/drive/1ANn4rmYFsz3ziuuhk25IlDa1llmk6GqQ?usp=sharing) |  |
+| 1. Redundantes/inconsistentes + estrutura comum | Izadora | ✅ [resumo](docs/parte1_redundantes.md) · [notebook](-) · [abrir no Colab](https://colab.research.google.com/drive/1ANn4rmYFsz3ziuuhk25IlDa1llmk6GqQ?usp=sharing) |  |
 | 2. Codificação categórica | Samuel | ✅ [resumo](docs/parte2_codificacao.md) · [notebook](notebooks/parte2_codificacao.ipynb) · [abrir no Colab](https://colab.research.google.com/github/IzadoraGalarza/TP1_G5_IA/blob/main/notebooks/parte2_codificacao.ipynb) |
 | 3. Normalização | Izadora | ✅ [resumo](docs/parte3_normalizacao.md) · [notebook](-) · [abrir no Colab](https://colab.research.google.com/drive/1ANn4rmYFsz3ziuuhk25IlDa1llmk6GqQ?usp=sharing) | 
 | 4. Balanceamento | a definir | — |
