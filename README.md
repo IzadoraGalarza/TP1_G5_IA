@@ -32,7 +32,7 @@ escala, redução e reamostragem dentro do pipeline. Detalhes em [`docs/etapa2_d
 ## Estrutura
 
 ```text
-├── data/                      # CSVs do Canvas (ignorada pelo Git; cada pessoa coloca os seus)
+├── data/                      # CSVs oficiais do Canvas (versionados)
 ├── docs/
 │   ├── STATUS_ETAPA2.md       # o que está feito e o que falta
 │   ├── etapa2_divisao.md      # divisão da Etapa 2 entre as cinco pessoas
@@ -58,7 +58,7 @@ python3 -m pip install -r requirements.txt
 python3 -m unittest discover -s tests -v
 ```
 
-Coloque os três arquivos do Canvas em `data/` com os nomes originais:
+Os três arquivos oficiais do Canvas já estão versionados em `data/`:
 
 ```text
 data/

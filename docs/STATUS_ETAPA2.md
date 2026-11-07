@@ -16,7 +16,7 @@ sua parte.
 
 ## Base comum (não precisa refazer)
 
-- **Dados**: os três CSVs do Canvas vão em `data/`, que é ignorada pelo Git; cada pessoa coloca os seus.
+- **Dados**: os três CSVs do Canvas já estão no repositório, em `data/`; basta clonar.
   `python -m src.data_validation --data-dir data` confere o contrato (deve imprimir “Contrato dos dados válido”).
 - **Preparação determinística**: `prepare_modeling_data(df)` em `src/preprocessing_stage2.py` remove as
   duplicatas exatas, as colunas suspeitas de vazamento (`tipo_alerta_soc`, `score_ids_legado`,
