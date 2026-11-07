@@ -1,45 +1,21 @@
 # TP1_G5_IA
-Repositório para o trabalho prática da disciplina de Inteligência Artificial
 
-## Organização do trabalho
+Trabalho em competição da disciplina de Inteligência Artificial (Profª Cristiane Neri Nobre):
+detecção de intrusão em redes com a base NSL-KDD. Métrica oficial: F1-macro no conjunto de teste.
 
-A branch `Develop` contém o notebook original da equipe, `Trabalho_IA_Etapa_1.ipynb`, com a
-análise exploratória consolidada. A branch `parte-1-eda-baseline` parte diretamente de `Develop` e
-acrescenta validação automatizada, um baseline sem vazamento e o plano de divisão entre cinco
-pessoas.
+> **Começando agora?** Leia [`docs/STATUS_ETAPA2.md`](docs/STATUS_ETAPA2.md): o que já está pronto,
+> resultados obtidos e o que falta para cada pessoa.
 
-Arquivos principais desta parte:
+## Etapas
 
-- `Trabalho_IA_Etapa_1.ipynb`: EDA original da equipe, preservada sem alterações;
-- `notebooks/01_eda_baseline.ipynb`: contrato dos arquivos oficiais e baseline;
-- `src/data_validation.py`: validação de esquema, IDs, classes e qualidade dos dados;
-- `src/baseline.py`: Árvore de Decisão avaliada com pré-processamento dentro das dobras;
-- `docs/plano_equipe.md`: riscos, três trilhas de revisão e divisão equilibrada da equipe.
+| Etapa | Prazo | Situação | Arquivos |
+|---|---|---|---|
+| 1. Análise exploratória | 01/11 | ✅ entregue | `Trabalho_IA_Etapa_1.ipynb`, `Relatorio_Analise_Exploratoria_NSL_KDD_Etapa_1_entrega.PDF`, `notebooks/01_eda_baseline.ipynb` |
+| 2. Pré-processamento | 07/11 | 🟡 em andamento | `Trabalho_IA_Etapa_2.ipynb`, `notebooks/02_codificacao.ipynb`, `docs/etapa2_divisao.md` |
+| 3. Classificadores | 21/11 | ⚪ | — |
+| 4. Competição e relatório final | 28/11 | ⚪ | — |
 
-## Execução local
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python3 -m pip install -r requirements.txt
-python3 -m unittest discover -s tests -v
-```
-
-O notebook original espera `base_nsl_kdd.csv`, mas esse arquivo não está versionado na branch
-`Develop`. O notebook complementar espera os arquivos oficiais da competição dentro de `data/`:
-
-```text
-data/
-├── treino.csv
-├── teste_sem_rotulo.csv
-└── modelo_de_submissao.csv
-```
-
-## Entrega de 07/11 - Etapa 2
-
-A divisão entre as cinco pessoas está em `docs/etapa2_divisao.md`. Todas as partes usam o mesmo
-protocolo: só `data/treino.csv`, `StratifiedGroupKFold` com 5 dobras sem embaralhar, Regressão
-Logística de referência e todo ajuste dentro da dobra de treino.
+## Etapa 2: divisão
 
 | Parte | Responsável | Código | Notebook |
 |---|---|---|---|
@@ -49,9 +25,47 @@ Logística de referência e todo ajuste dentro da dobra de treino.
 | 4. Balanceamento | Izadora | `src/preprocessing_stage2.py` | `Trabalho_IA_Etapa_2.ipynb` |
 | 5. Redução de dimensionalidade | Larissa | `src/preprocessing_stage2.py` | `Trabalho_IA_Etapa_2.ipynb` |
 
-`src/preprocessing_stage2.py` contém a preparação determinística comum (`prepare_modeling_data`) e
-`src/experiments.py` as métricas compartilhadas. As tabelas e figuras de todas as partes são
-gravadas em `output/etapa_2/` (`resultados_<parte>.csv`).
+Protocolo comum: somente `data/treino.csv`; `StratifiedGroupKFold` com 5 dobras, sem embaralhar e com
+assinaturas idênticas na mesma dobra; Regressão Logística de referência; toda imputação, codificação,
+escala, redução e reamostragem dentro do pipeline. Detalhes em [`docs/etapa2_divisao.md`](docs/etapa2_divisao.md).
 
-Para reproduzir, coloque os três CSVs do Canvas em `data/` (pasta ignorada pelo Git) e execute os
-notebooks do início ao fim.
+## Estrutura
+
+```text
+├── data/                      # CSVs do Canvas (ignorada pelo Git; cada pessoa coloca os seus)
+├── docs/
+│   ├── STATUS_ETAPA2.md       # o que está feito e o que falta
+│   ├── etapa2_divisao.md      # divisão da Etapa 2 entre as cinco pessoas
+│   └── plano_equipe.md        # riscos metodológicos e plano geral do trabalho
+├── notebooks/                 # notebooks por parte
+├── output/etapa_2/            # tabelas (resultados_<parte>.csv) e figuras geradas pelos notebooks
+├── src/
+│   ├── data_validation.py     # contrato dos CSVs oficiais
+│   ├── preprocessing_stage2.py# preparação comum, pré-processador de controle, rascunhos das partes 4 e 5
+│   ├── experiments.py         # métricas compartilhadas
+│   ├── cleaning.py            # parte 1
+│   ├── encoding.py            # parte 2
+│   └── baseline.py            # baseline da Etapa 1 (Árvore de Decisão)
+└── tests/                     # testes automatizados (unittest)
+```
+
+## Como executar
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install -r requirements.txt
+python3 -m unittest discover -s tests -v
+```
+
+Coloque os três arquivos do Canvas em `data/` com os nomes originais:
+
+```text
+data/
+├── treino.csv
+├── teste_sem_rotulo.csv
+└── modelo_de_submissao.csv
+```
+
+Para conferir os arquivos, rode `python3 -m src.data_validation --data-dir data`. Depois execute os
+notebooks do início ao fim. O conjunto de teste sem rótulo nunca é usado para ajustar nada.
