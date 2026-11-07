@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Any
 
 import pandas as pd
-from sklearn.metrics import f1_score, make_scorer, recall_score
+from sklearn.metrics import f1_score, make_scorer, precision_score, recall_score
 from sklearn.model_selection import StratifiedKFold, cross_validate
 
 
@@ -17,6 +17,7 @@ SCORING = {
     "precision_macro": "precision_macro",
     "recall_macro": "recall_macro",
     "f1_anomaly": make_scorer(f1_score, pos_label=POSITIVE_CLASS, zero_division=0),
+    "precision_anomaly": make_scorer(precision_score, pos_label=POSITIVE_CLASS, zero_division=0),
     "recall_anomaly": make_scorer(recall_score, pos_label=POSITIVE_CLASS, zero_division=0),
 }
 

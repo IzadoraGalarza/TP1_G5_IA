@@ -29,7 +29,7 @@ Configuração de controle para as comparações:
 
 ## Divisão
 
-### 1. Samuel Ferreira Alves Vieira - redundâncias e inconsistências
+### 1. Daniel Alves Goncalves - redundâncias e inconsistências
 
 Responsabilidades:
 
@@ -46,7 +46,7 @@ Entrega individual:
 - um parágrafo sobre redundâncias/inconsistências;
 - pelo menos um teste automatizado.
 
-### 2. Daniel Alves Goncalves - dados ausentes e codificação categórica
+### 2. Samuel Ferreira Alves Vieira - dados ausentes e codificação categórica
 
 Responsabilidades:
 
@@ -58,7 +58,7 @@ Responsabilidades:
 
 Entrega individual:
 
-- seção de ausentes/codificação do notebook;
+- seção de ausentes/codificação do notebook (`notebooks/02_codificacao.ipynb`, código em `src/encoding.py`);
 - tabela `resultados_codificacao.csv`;
 - um gráfico de dimensionalidade por técnica;
 - um parágrafo de justificativa e um teste automatizado.
@@ -124,17 +124,17 @@ Entrega individual:
 
 | Atividade final | Responsável |
 |---|---|
-| Conferir carregamento, alvo e colunas proibidas | Samuel |
-| Conferir se todos os requisitos do enunciado aparecem no notebook | Daniel Alves |
+| Conferir carregamento, alvo e colunas proibidas | Daniel Alves |
+| Conferir se todos os requisitos do enunciado aparecem no notebook | Samuel |
 | Reproduzir o ambiente e executar os testes | Daniel Pedrosa |
 | Consolidar as cinco tabelas em uma tabela comparativa | Izadora |
 | Ordenar as seções e executar “Run all” no notebook final | Larissa |
 
 ## Revisão cruzada
 
-- Samuel revisa balanceamento de Izadora;
-- Daniel Alves revisa limpeza de Samuel;
-- Daniel Pedrosa revisa codificação de Daniel Alves;
+- Daniel Alves revisa balanceamento de Izadora;
+- Samuel revisa limpeza de Daniel Alves;
+- Daniel Pedrosa revisa codificação de Samuel;
 - Izadora revisa redução de Larissa;
 - Larissa revisa transformação numérica de Daniel Pedrosa.
 
