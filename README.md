@@ -17,13 +17,13 @@ detecção de intrusão em redes com a base NSL-KDD. Métrica oficial: F1-macro 
 
 ## Etapa 2: divisão
 
-| Parte | Responsável | Código | Notebook |
-|---|---|---|---|
-| 1. Redundâncias e inconsistências | Daniel Alves | `src/cleaning.py` | `Trabalho_IA_Etapa_2.ipynb` |
-| 2. Ausentes e codificação categórica | Samuel | `src/encoding.py` | `notebooks/02_codificacao.ipynb` |
-| 3. Transformação numérica | Daniel Pedrosa | — | — |
-| 4. Balanceamento | Izadora | `src/preprocessing_stage2.py` | `Trabalho_IA_Etapa_2.ipynb` |
-| 5. Redução de dimensionalidade | Larissa | `src/preprocessing_stage2.py` | `Trabalho_IA_Etapa_2.ipynb` |
+| Parte | Responsável | Situação | Código | Notebook |
+|---|---|---|---|---|
+| 1. Redundâncias e inconsistências | Daniel Alves | 🟡 rascunho executado | `src/cleaning.py` | `Trabalho_IA_Etapa_2.ipynb` |
+| 2. Ausentes e codificação categórica | Samuel | ✅ concluída | `src/encoding.py` | [`notebooks/02_codificacao.ipynb`](https://colab.research.google.com/github/IzadoraGalarza/TP1_G5_IA/blob/main/notebooks/02_codificacao.ipynb) |
+| 3. Transformação numérica | Daniel Pedrosa | ⚪ não iniciada | — | — |
+| 4. Balanceamento | Izadora | 🟡 rascunho executado | `src/preprocessing_stage2.py` | `Trabalho_IA_Etapa_2.ipynb` |
+| 5. Redução de dimensionalidade | Larissa | 🟡 rascunho executado | `src/preprocessing_stage2.py` | `Trabalho_IA_Etapa_2.ipynb` |
 
 Protocolo comum: somente `data/treino.csv`; `StratifiedGroupKFold` com 5 dobras, sem embaralhar e com
 assinaturas idênticas na mesma dobra; Regressão Logística de referência; toda imputação, codificação,
@@ -51,7 +51,19 @@ escala, redução e reamostragem dentro do pipeline. Detalhes em [`docs/etapa2_d
 
 ## Como executar
 
+### No Google Colab
+
+Abra o notebook pelo link (ou pelo botão “Open in Colab” no topo dele) e use **Ambiente de execução →
+Executar tudo**. A primeira célula clona este repositório, com código e base, e instala as versões
+testadas das bibliotecas. Para guardar alterações, use **Arquivo → Salvar uma cópia no Drive**.
+
+- Parte 2 (codificação): [abrir no Colab](https://colab.research.google.com/github/IzadoraGalarza/TP1_G5_IA/blob/main/notebooks/02_codificacao.ipynb)
+
+### Localmente
+
 ```bash
+git clone https://github.com/IzadoraGalarza/TP1_G5_IA.git
+cd TP1_G5_IA
 python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install -r requirements.txt
@@ -69,3 +81,10 @@ data/
 
 Para conferir os arquivos, rode `python3 -m src.data_validation --data-dir data`. Depois execute os
 notebooks do início ao fim. O conjunto de teste sem rótulo nunca é usado para ajustar nada.
+
+### Adicionando a sua parte
+
+Siga o modelo da Parte 2: código em `src/<parte>.py`, notebook em `notebooks/02_<parte>.ipynb`
+(copie a primeira célula de setup para ele também abrir no Colab), tabela em
+`output/etapa_2/resultados_<parte>.csv` e um teste em `tests/`. Detalhes em
+[`docs/STATUS_ETAPA2.md`](docs/STATUS_ETAPA2.md).
