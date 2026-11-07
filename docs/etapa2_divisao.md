@@ -1,56 +1,155 @@
-# Etapa 2 - Pré-processamento: divisão entre cinco pessoas
+# Etapa 2 - divisão equilibrada entre cinco pessoas
 
-Entrega da etapa (enunciado, item 10): notebook com experimentos de pré-processamento, resultados
-comparativos e justificativas. Requisitos mínimos (item 4 do enunciado):
+Entrega de 07/11: notebook com experimentos de pré-processamento, resultados comparativos e
+justificativas. A divisão abaixo considera apenas a Etapa 2 e distribui aproximadamente 20% do
+trabalho para cada integrante.
 
-1. tratamento de dados redundantes/inconsistentes;
-2. 2 técnicas de balanceamento;
-3. 1 técnica de conversão simbólico-numérica, justificada (cardinalidade de `service`);
-4. 1 técnica de normalização/transformação numérica;
-5. 1 técnica de redução de dimensionalidade **ou** seleção de instâncias.
+## Protocolo comum
 
-Cada requisito vira uma parte. A parte 1 também entrega o **harness comum** (`src/experiments.py`)
-que as outras usam, para que toda a tabela venha do mesmo protocolo.
+Todas as partes devem usar o mesmo protocolo para que os resultados possam ser reunidos em uma
+única tabela:
 
-## Regras comuns (valem para todas as partes)
+- apenas a base de treino; o teste sem rótulo não participa dos experimentos;
+- `StratifiedGroupKFold` com 5 dobras, sem embaralhamento;
+- assinaturas idênticas mantidas na mesma dobra;
+- F1-macro como métrica principal, acompanhado de precisão e recall da classe `anomaly`;
+- toda imputação, codificação, escala, redução e reamostragem dentro do pipeline;
+- Regressão Logística como classificador de referência, sem tratá-la como modelo final;
+- sementes fixadas em 42;
+- cada comparação altera somente uma família de decisão.
 
-- Dados oficiais em `data/` (`treino.csv`, `teste_sem_rotulo.csv`, `modelo_de_submissao.csv`).
-  O teste **nunca** é usado para ajustar nada.
-- Validação: `make_cv(y)` = `StratifiedKFold(n_splits=5, shuffle=False)`, sempre o mesmo.
-- Toda etapa que aprende algo (imputação, codificação, escala, PCA, balanceamento, remoção de
-  linhas) fica **dentro** de um `imblearn.pipeline.Pipeline`, para ser ajustada só na dobra de treino.
-- Ponto de partida de cada parte: `build_cleaning_pipeline(...)` da Parte 1 com a configuração
-  `LIMPEZA_PADRAO`; troque **apenas** a sua família de decisão e mantenha o resto fixo.
-- Registro: cada variante vira uma linha via `run_experiment(...)`; junte com `results_table(...)`.
-  Métrica principal: F1-macro (média ± desvio). Também: recall e F1 da classe `anomaly`, tempo.
-- Classificador de referência: Árvore de Decisão (`random_state=42`). Quem trabalha com técnicas
-  sensíveis à escala (Partes 3 e 5) repete também com um modelo sensível (Regressão Logística/KNN).
-- Cada pessoa entrega: notebook `notebooks/02_<parte>.ipynb`, tabela de resultados e um parágrafo
-  de justificativa para o relatório.
+Configuração de controle para as comparações:
+
+- excluir `tipo_alerta_soc`, `score_ids_legado` e `tempo_resposta_analista_min`;
+- remover constante e representações derivadas redundantes;
+- imputação por moda/mediana;
+- one-hot encoding;
+- StandardScaler;
+- sem balanceamento e sem redução dimensional, exceto nas partes que avaliam essas técnicas.
 
 ## Divisão
 
-| Parte | Responsável | Requisito | Variantes mínimas a comparar |
-|---|---|---|---|
-| **1** | Samuel | Redundantes/inconsistentes + harness comum | colunas suspeitas fora/dentro; categorias normalizadas; inválidos mantidos / → NaN + imputação / clip; duplicatas mantidas/removidas; conflitos mantidos/removidos/voto majoritário |
-| **2** | _a definir_ | Conversão simbólico-numérica | one-hot vs. ordinal vs. frequency encoding (e/ou target encoding com validação interna); discutir cardinalidade de `service`, dimensionalidade gerada e categorias desconhecidas no teste |
-| **3** | _a definir_ | Normalização/transformação numérica | nenhuma vs. `StandardScaler` vs. `MinMaxScaler` vs. `log1p` + `RobustScaler` (bytes e durações muito assimétricos); mostrar que árvore é invariante e modelo sensível à escala não é |
-| **4** | _a definir_ | Balanceamento (2 técnicas) | sem balanceamento vs. `RandomUnderSampler` vs. `SMOTENC` (antes do one-hot) ou SMOTE pós-codificação justificado; opcional `class_weight="balanced"` |
-| **5** | _a definir_ | Redução de dimensionalidade ou seleção de instâncias + consolidação | PCA (variância 90/95/99%) **ou** Tomek Links / ENN; depois junta as tabelas das Partes 1–5 no notebook único da etapa e redige a seção de pré-processamento |
+### 1. Samuel Ferreira Alves Vieira - redundâncias e inconsistências
 
-### Dependências e ordem
+Responsabilidades:
 
-1. Parte 1 publica o harness e a configuração de limpeza padrão (desbloqueia as demais).
-2. Partes 2, 3, 4 e 5 rodam em paralelo sobre `LIMPEZA_PADRAO`.
-3. Parte 5 consolida: uma tabela única `etapa × variante × F1-macro × recall anomaly × tempo`.
-4. Revisão cruzada: 1 revisa 4 · 2 revisa 1 · 3 revisa 2 · 4 revisa 5 · 5 revisa 3. Checar
-   vazamento (algo ajustado fora da dobra?) e se a comparação muda uma coisa por vez.
+- validar colunas, classe e atributos com possível vazamento;
+- comparar valores inválidos mantidos, convertidos em `NaN` e limitados por `clip`;
+- comparar duplicatas mantidas versus removidas somente na dobra de treino;
+- manter conflitos de rótulo sem relabelar automaticamente;
+- justificar remoção de constante e redundâncias de bytes.
 
-## Armadilhas que derrubam a nota de qualidade metodológica
+Entrega individual:
 
-- Escalar, codificar, fazer PCA ou balancear o `treino.csv` inteiro antes do `cross_validate`.
-- Balancear (ou remover duplicatas) também na dobra de validação.
-- SMOTE direto sobre one-hot gera categorias fracionárias; preferir `SMOTENC` ou justificar.
-- Usar `tipo_alerta_soc`, `score_ids_legado` ou `tempo_resposta_analista_min` no modelo principal
-  (ver EDA, seção 9 do relatório da Etapa 1).
-- Escolher a variante pelo melhor F1 de uma única dobra; reportar média e desvio.
+- seção de limpeza do notebook;
+- tabela `resultados_limpeza.csv`;
+- um parágrafo sobre redundâncias/inconsistências;
+- pelo menos um teste automatizado.
+
+### 2. Daniel Alves Goncalves - dados ausentes e codificação categórica
+
+Responsabilidades:
+
+- comparar imputação categórica por moda e categoria explícita `ausente`;
+- comparar one-hot, ordinal e codificação por frequência;
+- medir a dimensionalidade criada por cada alternativa;
+- discutir especificamente a cardinalidade de `service` e categorias desconhecidas;
+- indicar a codificação mais segura para a configuração comum.
+
+Entrega individual:
+
+- seção de ausentes/codificação do notebook;
+- tabela `resultados_codificacao.csv`;
+- um gráfico de dimensionalidade por técnica;
+- um parágrafo de justificativa e um teste automatizado.
+
+### 3. Daniel Pedrosa Collina - transformação numérica
+
+Responsabilidades:
+
+- comparar sem escala, StandardScaler, MinMaxScaler e RobustScaler;
+- aplicar `log1p` somente a atributos não negativos e assimétricos quando justificável;
+- manter imputação numérica dentro das dobras;
+- registrar o efeito das transformações no F1-macro e no tempo;
+- indicar a transformação padrão para a configuração comum.
+
+Entrega individual:
+
+- seção de transformação numérica do notebook;
+- tabela `resultados_transformacao.csv`;
+- um gráfico comparativo das métricas;
+- um parágrafo de justificativa e um teste automatizado.
+
+### 4. Izadora Galarza Alves - balanceamento
+
+Responsabilidades:
+
+- comparar sem balanceamento, RandomUnderSampler e RandomOverSampler;
+- executar o balanceamento somente nas dobras de treino;
+- registrar a distribuição das classes antes e depois de cada técnica;
+- comparar F1-macro, precisão e recall da anomalia;
+- discutir perda de informação no undersampling e sobreajuste no oversampling.
+
+Se houver tempo, SMOTENC pode ser incluído como experimento adicional, mas não substitui as duas
+técnicas já reproduzíveis. SMOTE direto depois de one-hot não deve ser usado sem justificativa.
+
+Entrega individual:
+
+- seção de balanceamento do notebook;
+- tabela `resultados_balanceamento.csv`;
+- gráfico de precisão versus recall da anomalia;
+- um parágrafo de justificativa e um teste automatizado.
+
+### 5. Larissa Varella Araújo - redução de dimensionalidade
+
+Responsabilidades:
+
+- comparar sem redução e Truncated SVD com 10, 20 e 40 componentes;
+- registrar variância explicada acumulada, tempo e F1-macro;
+- verificar se a redução preserva o desempenho da classe minoritária;
+- indicar o número de componentes com melhor equilíbrio entre desempenho e custo;
+- organizar a ordem final das seções no notebook integrado.
+
+A organização final não significa escrever ou corrigir as partes das outras pessoas: cada responsável
+entrega sua própria célula, tabela e justificativa prontas para inclusão.
+
+Entrega individual:
+
+- seção de redução dimensional do notebook;
+- tabela `resultados_reducao.csv`;
+- gráfico de componentes versus variância/F1;
+- um parágrafo de justificativa e um teste automatizado.
+
+## Integração também dividida
+
+| Atividade final | Responsável |
+|---|---|
+| Conferir carregamento, alvo e colunas proibidas | Samuel |
+| Conferir se todos os requisitos do enunciado aparecem no notebook | Daniel Alves |
+| Reproduzir o ambiente e executar os testes | Daniel Pedrosa |
+| Consolidar as cinco tabelas em uma tabela comparativa | Izadora |
+| Ordenar as seções e executar “Run all” no notebook final | Larissa |
+
+## Revisão cruzada
+
+- Samuel revisa balanceamento de Izadora;
+- Daniel Alves revisa limpeza de Samuel;
+- Daniel Pedrosa revisa codificação de Daniel Alves;
+- Izadora revisa redução de Larissa;
+- Larissa revisa transformação numérica de Daniel Pedrosa.
+
+Cada revisão verifica três pontos: vazamento, comparação justa e coerência entre código, tabela e
+justificativa.
+
+## Critério de conclusão de cada parte
+
+Cada pessoa entrega exatamente cinco itens:
+
+1. código executável dentro do pipeline;
+2. pelo menos três variantes comparáveis, incluindo o controle;
+3. tabela CSV de resultados;
+4. uma figura e um parágrafo curto para o notebook;
+5. um teste e uma revisão cruzada registrada.
+
+Assim, nenhuma pessoa fica apenas com redação ou apenas com integração, e todas contribuem com
+implementação, evidência e justificativa.
