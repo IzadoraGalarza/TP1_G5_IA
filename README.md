@@ -32,7 +32,7 @@ fica dentro do Pipeline e é ajustado só no treino de cada fold. O teste nunca 
 
 ```text
 ├── data/                     # treino.csv, teste_sem_rotulo.csv, modelo_de_submissao.csv (Canvas)
-├── docs/                     # resumo de cada parte para a equipe
+├── docs/                     # resumo de cada parte para a equipe e relatórios de cada entrega
 ├── notebooks/                # notebook de cada parte (roda sozinho no Colab)
 ├── output/etapa_2/           # tabelas e gráficos gerados pelos notebooks
 ├── Trabalho_IA_Etapa_1.ipynb # EDA entregue na Etapa 1
