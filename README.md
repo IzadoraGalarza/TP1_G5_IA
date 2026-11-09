@@ -11,8 +11,8 @@ as partes individuais.
 | Etapa | Prazo | Situação |
 |---|---|---|
 | 1. Análise exploratória | 01/11 | ✅ entregue (`Trabalho_IA_Etapa_1.ipynb` e relatório em PDF) |
-| 2. Pré-processamento | 07/11 | 🟡 em andamento |
-| 3. Classificadores | 21/11 | ⚪ |
+| 2. Pré-processamento | 07/11 | ✅ entregue |
+| 3. Classificadores | 21/11 | 🟡 em andamento |
 | 4. Competição e relatório final | 28/11 | ⚪ |
 
 ## Etapa 2: divisão
