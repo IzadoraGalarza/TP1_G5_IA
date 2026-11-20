@@ -9,6 +9,7 @@ from src.stage3_neural_network import (
     MLPConfig,
     REDUNDANT_COLUMNS,
     clean_stage2_data,
+    default_grid,
     evaluate_configuration,
     split_features_target,
 )
@@ -74,6 +75,14 @@ class Stage3NeuralNetworkTests(unittest.TestCase):
             "recall_anomaly",
         ):
             self.assertIn(key, summary)
+
+    def test_default_grid_covers_three_architectures(self) -> None:
+        grid = default_grid()
+        self.assertEqual(len(grid), 18)
+        self.assertEqual(
+            {config.hidden_layer_sizes for config in grid},
+            {(64,), (64, 32), (128,)},
+        )
 
 
 if __name__ == "__main__":

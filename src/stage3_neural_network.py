@@ -174,7 +174,7 @@ def build_pipeline(
     X: pd.DataFrame,
     config: MLPConfig,
     *,
-    max_iter: int = 120,
+    max_iter: int = 180,
 ) -> Pipeline:
     model = MLPClassifier(
         hidden_layer_sizes=config.hidden_layer_sizes,
@@ -214,7 +214,7 @@ def default_grid() -> list[MLPConfig]:
     return [
         MLPConfig(hidden, alpha, early)
         for hidden, alpha, early in product(
-            [(64,), (64, 32)],
+            [(64,), (64, 32), (128,)],
             [0.0001, 0.001, 0.01],
             [True, False],
         )
@@ -227,7 +227,7 @@ def evaluate_configuration(
     config: MLPConfig,
     *,
     n_splits: int = 3,
-    max_iter: int = 120,
+    max_iter: int = 180,
 ) -> tuple[dict[str, object], list[dict[str, object]]]:
     cv = StratifiedGroupKFold(n_splits=n_splits, shuffle=True, random_state=SEED)
     started = time.time()
@@ -289,7 +289,7 @@ def run_grid(
     configs: Iterable[MLPConfig] | None = None,
     *,
     n_splits: int = 3,
-    max_iter: int = 120,
+    max_iter: int = 180,
     output_dir: Path | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     configs = list(configs or default_grid())
@@ -399,7 +399,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--train", type=Path, default=Path("data/treino.csv"))
     parser.add_argument("--output", type=Path, default=Path("output/etapa_3"))
     parser.add_argument("--folds", type=int, default=3)
-    parser.add_argument("--max-iter", type=int, default=120)
+    parser.add_argument("--max-iter", type=int, default=180)
     parser.add_argument(
         "--quick",
         action="store_true",

@@ -38,7 +38,7 @@ A parte de Rede Neural está na branch `parte-3-rede-neural-samuel`:
 - código reproduzível: `src/stage3_neural_network.py`;
 - resultados e gráficos: `output/etapa_3/`.
 
-Foram comparadas 12 configurações de MLP, variando camadas, `alpha` e `early_stopping`, com a
+Foram comparadas 18 configurações de MLP, variando camadas, `alpha` e `early_stopping`, com a
 normalização Standard escolhida na Etapa 2 e validação cruzada agrupada em três dobras.
 
 ## Estrutura
