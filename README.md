@@ -28,6 +28,19 @@ as partes individuais.
 Regra de ouro: tudo o que aprende algo dos dados (imputação, codificação, escala, balanceamento, PCA)
 fica dentro do Pipeline e é ajustado só no treino de cada fold. O teste nunca participa de nenhum `fit`.
 
+## Etapa 3: Rede Neural - Samuel
+
+A parte de Rede Neural está na branch `parte-3-rede-neural-samuel`:
+
+- notebook: `notebooks/parte3_rede_neural.ipynb`;
+- abrir no Colab: https://colab.research.google.com/github/IzadoraGalarza/TP1_G5_IA/blob/parte-3-rede-neural-samuel/notebooks/parte3_rede_neural.ipynb;
+- resumo e discussão: `docs/parte3_rede_neural.md`;
+- código reproduzível: `src/stage3_neural_network.py`;
+- resultados e gráficos: `output/etapa_3/`.
+
+Foram comparadas 12 configurações de MLP, variando camadas, `alpha` e `early_stopping`, com a
+normalização Standard escolhida na Etapa 2 e validação cruzada agrupada em três dobras.
+
 ## Estrutura
 
 ```text

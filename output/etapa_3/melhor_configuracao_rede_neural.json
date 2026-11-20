@@ -1,0 +1,23 @@
+{
+  "arquitetura": "64",
+  "hidden_layer_sizes": "(64,)",
+  "alpha": 0.001,
+  "early_stopping": false,
+  "normalizacao": "StandardScaler",
+  "codificacao": "onehot_rare",
+  "limpeza": "F_E_mais_suspeitas",
+  "n_linhas": 55063,
+  "n_dobras": 3,
+  "tempo_s": 14.813293933868408,
+  "f1_macro": 0.9637955912988997,
+  "f1_macro_std": 0.003279223310292652,
+  "precision_normal": 0.9965521211195645,
+  "precision_normal_std": 0.0005407556494391909,
+  "recall_normal": 0.9988356829638997,
+  "recall_normal_std": 0.00011578906256203202,
+  "precision_anomaly": 0.9633112485571503,
+  "precision_anomaly_std": 0.004750505292277101,
+  "recall_anomaly": 0.8988349773522174,
+  "recall_anomaly_std": 0.014179423918118876,
+  "iteracoes_media": 110.0
+}
